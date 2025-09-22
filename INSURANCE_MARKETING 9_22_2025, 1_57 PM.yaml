@@ -1,0 +1,2930 @@
+name: INSURANCE_MARKETING
+tables:
+  - name: AD_CAMPAIGNS
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: AD_CAMPAIGNS
+    dimensions:
+      - name: AD_CAMPAIGN_ID
+        synonyms:
+          - advertising_campaign_id
+          - campaign_identifier
+          - ad_campaign_key
+          - marketing_campaign_id
+          - ad_id
+        description: Unique identifier for an advertising campaign.
+        expr: AD_CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - AD_001
+          - AD_002
+          - AD_003
+      - name: AD_SET_NAME
+        synonyms:
+          - ad_group_name
+          - ad_set_title
+          - ad_group_title
+          - ad_set_label
+          - ad_group_label
+          - ad_set_identifier
+        description: The name of the ad campaign or set, which represents a specific marketing initiative or strategy, such as targeting a particular audience or promoting a specific product.
+        expr: AD_SET_NAME
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Auto Insurance - Search
+          - Home Insurance Cross-Sell
+          - Brand Awareness - Young Adults
+      - name: BID_STRATEGY
+        synonyms:
+          - bidding_approach
+          - bidding_method
+          - bidding_tactic
+          - bidding_technique
+          - cost_strategy
+          - pricing_strategy
+        description: |-
+          The bidding strategy used for the ad campaign, which determines how the ad platform optimizes ad serving and pricing, with possible values being: 
+          - "reach": maximizing the number of people who see the ad, 
+          - "target_cpa": targeting a specific cost per acquisition, 
+          - "maximize_conversions": maximizing the number of conversions while spending the entire budget.
+        expr: BID_STRATEGY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - reach
+          - target_cpa
+          - maximize_conversions
+      - name: BUDGET_TYPE
+        synonyms:
+          - budget_category
+          - cost_type
+          - expense_classification
+          - financial_category
+          - spending_type
+          - allocation_method
+          - cost_allocation
+          - budget_classification
+        description: The budget type for the campaign, indicating whether the budget is allocated on a daily or lifetime basis.
+        expr: BUDGET_TYPE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - daily
+          - lifetime
+      - name: CAMPAIGN_ID
+        synonyms:
+          - ad_campaign_identifier
+          - marketing_campaign_key
+          - campaign_reference
+          - promo_id
+          - advertising_campaign_code
+        description: Unique identifier for a marketing campaign.
+        expr: CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CAMP_001
+          - CAMP_002
+          - CAMP_003
+      - name: CAMPAIGN_STATUS
+        synonyms:
+          - campaign_state
+          - ad_status
+          - marketing_status
+          - promotion_status
+          - ad_campaign_state
+          - campaign_condition
+        description: The current status of the campaign, indicating whether it has been completed or is still active.
+        expr: CAMPAIGN_STATUS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - completed
+          - active
+      - name: CHANNEL_ID
+        synonyms:
+          - channel_code
+          - media_channel
+          - ad_channel
+          - marketing_channel
+          - distribution_channel
+          - communication_channel
+        description: The channel through which the campaign was executed, such as social media or search engine advertising.
+        expr: CHANNEL_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - FACEBOOK
+          - GOOGLE_ADS
+      - name: TARGETING_CRITERIA
+        synonyms:
+          - target_audience
+          - ad_targeting
+          - audience_criteria
+          - ad_reach
+          - target_market
+          - ad_focus
+          - demographic_targeting
+          - ad_segmentation
+        description: This column stores the targeting criteria for each ad campaign, including demographic information such as age range and location, as well as interests, keywords, and audience characteristics that define the intended audience for the ad.
+        expr: TARGETING_CRITERIA
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - '{"age_range": "22-35", "interests": ["cars", "safety"], "location": "urban"}'
+          - '{"keywords": ["auto insurance", "car insurance"], "age_range": "25-45", "location": "US"}'
+          - '{"audience": "existing_customers", "product_interest": "home"}'
+    time_dimensions:
+      - name: CREATED_AT
+        synonyms:
+          - created_on
+          - creation_date
+          - creation_time
+          - timestamp
+          - date_created
+          - inserted_at
+          - entry_date
+          - record_created
+        description: Date and time when the advertising campaign was created.
+        expr: CREATED_AT
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2025-09-11T19:06:57.659+0000
+          - 2025-09-16T06:46:23.368+0000
+      - name: END_DATE
+        synonyms:
+          - expiration_date
+          - termination_date
+          - closing_date
+          - completion_date
+          - finish_date
+          - last_date
+          - final_date
+        description: The date when the campaign is scheduled to end.
+        expr: END_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-08-31'
+          - '2024-11-15'
+          - '2024-09-30'
+      - name: START_DATE
+        synonyms:
+          - start_time
+          - begin_date
+          - launch_date
+          - initiation_date
+          - commencement_date
+          - kick_off_date
+          - initial_date
+        description: The date when the advertising campaign started.
+        expr: START_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-05-15'
+          - '2024-07-01'
+          - '2024-06-01'
+    facts:
+      - name: BUDGET_AMOUNT
+        synonyms:
+          - allocated_budget
+          - budget_cost
+          - campaign_expenditure
+          - financial_allocation
+          - funding_amount
+          - monetary_limit
+          - total_budget
+        description: The total amount allocated for a specific advertising campaign.
+        expr: BUDGET_AMOUNT
+        data_type: NUMBER(8,2)
+        access_modifier: public_access
+        sample_values:
+          - '1500.00'
+          - '800.00'
+          - '75000.00'
+    primary_key:
+      columns:
+        - AD_CAMPAIGN_ID
+  - name: ATTRIBUTION_RESULTS
+    synonyms:
+      - attribution_results
+      - attribution_data
+      - marketing_attribution
+      - attribution_outcomes
+      - attribution_records
+      - attribution_table
+      - attribution_info
+      - attribution_details
+    description: This table stores the results of marketing attribution analysis, which assigns credit to various marketing touchpoints for driving customer conversions. Each record represents a single attribution event, linking a customer, policy, and marketing model to a specific touchpoint and campaign, and quantifying the attributed revenue and credit assigned to that touchpoint.
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: ATTRIBUTION_RESULTS
+    dimensions:
+      - name: ATTRIBUTION_ID
+        synonyms:
+          - attribution_key
+          - attribution_code
+          - attribution_reference
+          - attribution_identifier
+          - attribution_uuid
+        description: Unique identifier for an attribution result, used to track and distinguish between different attribution models or scenarios.
+        expr: ATTRIBUTION_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - ATTR_001
+          - ATTR_002
+          - ATTR_004
+      - name: CAMPAIGN_ID
+        synonyms:
+          - advertising_campaign_id
+          - marketing_campaign_id
+          - promo_id
+          - campaign_code
+          - advertising_id
+          - marketing_id
+        description: Unique identifier for a marketing campaign.
+        expr: CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CAMP_001
+          - CAMP_003
+          - CAMP_004
+      - name: CHANNEL
+        synonyms:
+          - medium
+          - platform
+          - medium_of_communication
+          - marketing_channel
+          - communication_channel
+          - sales_channel
+          - distribution_channel
+        description: The marketing channel through which a customer interacted with the business, such as online advertising, email campaigns, or phone calls.
+        expr: CHANNEL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - google_ads
+          - email
+          - phone
+      - name: CUSTOMER_ID
+        synonyms:
+          - client_id
+          - account_id
+          - user_id
+          - customer_account
+          - client_account
+          - account_number
+          - customer_number
+        description: Unique identifier for the customer associated with the attribution result.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST_001
+          - CUST_006
+          - CUST_002
+      - name: MODEL_ID
+        synonyms:
+          - model_identifier
+          - attribution_model
+          - predictive_model
+          - algorithm_id
+          - machine_learning_model
+          - data_model
+          - statistical_model
+        description: The attribution model used to assign credit to each touchpoint in the customer journey, with options including a linear model that assigns equal credit to all touchpoints, a last touch model that assigns all credit to the last touchpoint, and a first touch model that assigns all credit to the first touchpoint.
+        expr: MODEL_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - LINEAR
+          - LAST_TOUCH
+          - FIRST_TOUCH
+      - name: POLICY_ID
+        synonyms:
+          - policy_number
+          - policy_code
+          - insurance_policy_id
+          - contract_id
+          - coverage_id
+          - plan_id
+        description: Unique identifier for a specific insurance policy.
+        expr: POLICY_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - POL_005
+          - POL_001
+          - POL_006
+      - name: TOUCHPOINT_ID
+        synonyms:
+          - customer_interaction_id
+          - interaction_id
+          - engagement_id
+          - customer_event_id
+          - marketing_touch_id
+          - event_id
+          - customer_contact_id
+        description: Unique identifier for a specific customer interaction or marketing touchpoint.
+        expr: TOUCHPOINT_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - TOUCH_001
+          - TOUCH_003
+          - TOUCH_005
+    facts:
+      - name: ATTRIBUTED_REVENUE
+        synonyms:
+          - attributed_sales
+          - revenue_generated
+          - attributed_earnings
+          - credited_revenue
+          - allocated_revenue
+        description: The total revenue generated that can be attributed to a specific marketing channel or campaign.
+        expr: ATTRIBUTED_REVENUE
+        data_type: NUMBER(8,2)
+        access_modifier: public_access
+        sample_values:
+          - '1500.00'
+          - '1200.00'
+          - '400.00'
+      - name: ATTRIBUTION_CREDIT
+        synonyms:
+          - attributed_value
+          - credit_amount
+          - attribution_amount
+          - allocated_credit
+          - assigned_value
+        description: The percentage of revenue or conversion credit attributed to each touchpoint or marketing channel in the customer's journey.
+        expr: ATTRIBUTION_CREDIT
+        data_type: NUMBER(5,4)
+        access_modifier: public_access
+        sample_values:
+          - '0.7000'
+          - '0.3300'
+          - '1.0000'
+    primary_key:
+      columns:
+        - ATTRIBUTION_ID
+  - name: CAMPAIGN_FORECASTS
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: CAMPAIGN_FORECASTS
+    dimensions:
+      - name: CAMPAIGN_ID
+        synonyms:
+          - ad_campaign_id
+          - marketing_campaign_id
+          - promo_id
+          - campaign_reference
+          - campaign_code
+          - ad_group_id
+        description: Unique identifier for a marketing campaign.
+        expr: CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CAMP_001
+          - CAMP_003
+      - name: FORECAST_ID
+        synonyms:
+          - forecast_key
+          - forecast_identifier
+          - forecast_code
+          - forecast_reference
+          - forecast_uuid
+          - prediction_id
+        description: Unique identifier for a forecast in the campaign forecasts table.
+        expr: FORECAST_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - FORE_002
+          - FORE_001
+          - FORE_003
+      - name: FORECAST_MODEL
+        synonyms:
+          - algorithm_used
+          - forecasting_technique
+          - predictive_model
+          - forecasting_method
+          - model_type
+          - prediction_algorithm
+        description: The type of forecasting model used to generate the campaign forecast, either a machine learning model (ml_model) or a regression model.
+        expr: FORECAST_MODEL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - ml_model
+          - regression
+      - name: FORECAST_PERIOD
+        synonyms:
+          - forecast_duration
+          - forecast_term
+          - forecast_length
+          - forecast_span
+          - forecast_interval
+          - forecast_cycle
+          - forecast_horizon
+          - forecast_timespan
+        description: The frequency at which the forecast is generated, either on a monthly or quarterly basis.
+        expr: FORECAST_PERIOD
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - monthly
+          - quarterly
+    time_dimensions:
+      - name: CREATED_AT
+        synonyms:
+          - created_date
+          - creation_timestamp
+          - timestamp
+          - creation_date
+          - date_created
+          - record_created_at
+          - inserted_at
+          - entry_date
+          - registration_date
+        description: Date and time when the campaign forecast was created.
+        expr: CREATED_AT
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2025-09-11T19:06:56.514+0000
+      - name: FORECAST_DATE
+        synonyms:
+          - forecast_day
+          - prediction_date
+          - projected_date
+          - expected_date
+          - scheduled_date
+          - planned_date
+          - forecasted_day
+          - anticipated_date
+        description: Date for which the campaign forecast is being made, typically the first day of the month.
+        expr: FORECAST_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-08-01'
+          - '2024-09-01'
+          - '2024-07-01'
+    facts:
+      - name: FORECAST_CONFIDENCE
+        synonyms:
+          - confidence_level
+          - forecast_accuracy
+          - prediction_certainty
+          - forecast_reliability
+          - confidence_score
+          - forecast_precision
+        description: A measure of the reliability or accuracy of the forecast, with higher values indicating a higher degree of confidence in the forecasted outcome, ranging from 0 (no confidence) to 1 (complete confidence).
+        expr: FORECAST_CONFIDENCE
+        data_type: NUMBER(3,2)
+        access_modifier: public_access
+        sample_values:
+          - '0.75'
+          - '0.78'
+          - '0.72'
+      - name: FORECASTED_CLICKS
+        synonyms:
+          - projected_clicks
+          - estimated_clicks
+          - forecasted_click_throughs
+          - predicted_clicks
+          - anticipated_clicks
+          - expected_clicks
+        description: The total number of clicks that are predicted to occur for a specific campaign.
+        expr: FORECASTED_CLICKS
+        data_type: NUMBER(10,0)
+        access_modifier: public_access
+        sample_values:
+          - '10000'
+          - '41666'
+          - '41667'
+      - name: FORECASTED_CONVERSIONS
+        synonyms:
+          - projected_conversions
+          - forecasted_sales
+          - estimated_conversions
+          - predicted_conversions
+          - forecasted_successes
+          - anticipated_conversions
+        description: The total number of conversions (e.g. sales, leads, etc.) that are predicted to occur as a result of a specific marketing campaign.
+        expr: FORECASTED_CONVERSIONS
+        data_type: NUMBER(6,0)
+        access_modifier: public_access
+        sample_values:
+          - '112'
+          - '209'
+          - '208'
+      - name: FORECASTED_IMPRESSIONS
+        synonyms:
+          - projected_views
+          - forecasted_views
+          - predicted_ad_views
+          - estimated_impressions
+          - forecasted_ad_views
+          - anticipated_views
+        description: The total number of ad impressions that are predicted to be served for a specific campaign.
+        expr: FORECASTED_IMPRESSIONS
+        data_type: NUMBER(12,0)
+        access_modifier: public_access
+        sample_values:
+          - '833333'
+          - '200000'
+          - '833334'
+      - name: FORECASTED_LEADS
+        synonyms:
+          - projected_leads
+          - forecasted_prospects
+          - predicted_opportunities
+          - anticipated_leads
+          - expected_leads
+          - forecasted_sales_leads
+          - projected_conversions
+        description: The total number of leads that are predicted to be generated from a specific marketing campaign.
+        expr: FORECASTED_LEADS
+        data_type: NUMBER(8,0)
+        access_modifier: public_access
+        sample_values:
+          - '833'
+          - '450'
+          - '834'
+      - name: FORECASTED_REVENUE
+        synonyms:
+          - projected_revenue
+          - forecasted_sales
+          - estimated_revenue
+          - predicted_income
+          - forecasted_turnover
+          - anticipated_revenue
+          - expected_revenue
+          - forecasted_profit
+          - projected_earnings
+        description: The forecasted revenue for a specific campaign, representing the predicted total revenue expected to be generated by the campaign.
+        expr: FORECASTED_REVENUE
+        data_type: NUMBER(12,2)
+        access_modifier: public_access
+        sample_values:
+          - '1250000.00'
+          - '1125000.00'
+      - name: FORECASTED_SPEND
+        synonyms:
+          - projected_expenditure
+          - forecasted_expense
+          - estimated_cost
+          - predicted_outlay
+          - anticipated_disbursement
+          - forecasted_outgoings
+        description: The total amount of money that is predicted to be spent on a specific campaign.
+        expr: FORECASTED_SPEND
+        data_type: NUMBER(10,2)
+        access_modifier: public_access
+        sample_values:
+          - '25000.00'
+          - '50000.00'
+    primary_key:
+      columns:
+        - FORECAST_ID
+  - name: CUSTOMERS
+    synonyms:
+      - clients
+      - patrons
+      - customers
+      - buyers
+      - consumers
+      - subscribers
+      - account holders
+      - policyholders
+      - insureds
+      - clients base
+    description: This table stores information about customers of an insurance company, including their personal details, contact information, policy ownership, and interaction history, as well as risk profiles and scores that help the company assess their value and potential for churn.
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: CUSTOMERS
+    dimensions:
+      - name: AGENT_ID
+        synonyms:
+          - representative_id
+          - sales_agent_id
+          - account_manager_id
+          - customer_representative
+          - assigned_agent
+          - agent_code
+          - sales_representative_id
+          - account_rep_id
+        description: Unique identifier for the sales agent associated with the customer.
+        expr: AGENT_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - AGT_003
+          - AGT_001
+          - AGT_002
+      - name: CITY
+        synonyms:
+          - town
+          - municipality
+          - metropolis
+          - urban_area
+          - locality
+          - settlement
+          - borough
+          - district
+          - suburb
+          - neighborhood
+        description: The city where the customer is located.
+        expr: CITY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Austin
+          - Denver
+          - Seattle
+      - name: CUSTOMER_ID
+        synonyms:
+          - customer_key
+          - client_id
+          - account_number
+          - user_id
+          - unique_customer_identifier
+          - customer_reference_number
+          - client_reference
+          - account_identifier
+        description: Unique identifier for each customer in the database.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST_001
+          - CUST_003
+          - CUST_002
+      - name: CUSTOMER_TYPE
+        synonyms:
+          - customer_category
+          - client_type
+          - account_type
+          - customer_segment
+          - client_classification
+          - account_classification
+        description: The type of customer based on their current engagement with the company, categorized as lapsed (no longer active), prospect (potential customer), or active (currently engaged).
+        expr: CUSTOMER_TYPE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - lapsed
+          - prospect
+          - active
+      - name: EDUCATION_LEVEL
+        synonyms:
+          - academic_background
+          - educational_attainment
+          - degree_level
+          - highest_education
+          - academic_qualification
+          - educational_status
+          - level_of_education
+        description: The level of education completed by the customer, categorized as high school, bachelor's degree, or master's degree.
+        expr: EDUCATION_LEVEL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - master
+          - high_school
+          - bachelor
+      - name: EMPLOYMENT_STATUS
+        synonyms:
+          - job_status
+          - occupation_status
+          - work_status
+          - employment_type
+          - job_type
+          - professional_status
+          - career_status
+          - work_category
+        description: The employment status of the customer, indicating whether they are currently employed or retired.
+        expr: EMPLOYMENT_STATUS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - retired
+          - employed
+      - name: GENDER
+        synonyms:
+          - sex
+          - male_female
+          - demographic
+          - biological_sex
+          - personal_gender
+        description: The GENDER column represents the customer's biological sex, with 'M' indicating male and 'F' indicating female.
+        expr: GENDER
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - M
+          - F
+      - name: MARITAL_STATUS
+        synonyms:
+          - marital_status
+          - relationship_status
+          - civil_status
+          - family_status
+          - marriage_status
+          - relationship_type
+          - family_type
+        description: The marital status of the customer, indicating whether they are married, single, or divorced.
+        expr: MARITAL_STATUS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - married
+          - single
+          - divorced
+      - name: RISK_PROFILE
+        synonyms:
+          - risk_level
+          - risk_category
+          - risk_classification
+          - risk_rating
+          - risk_assessment
+          - risk_score
+          - risk_grade
+          - risk_status
+        description: A categorization of a customer's investment risk tolerance, indicating the level of uncertainty they are willing to accept in their investments, with options including medium, low, and high.
+        expr: RISK_PROFILE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - medium
+          - low
+          - high
+      - name: STATE
+        synonyms:
+          - province
+          - region
+          - territory
+          - county
+          - area
+          - location
+          - jurisdiction
+          - district
+          - division
+        description: The two-letter abbreviation for the state where the customer resides.
+        expr: STATE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - TX
+          - CO
+          - WA
+      - name: ZIP_CODE
+        synonyms:
+          - postal_code
+          - postcode
+          - zip
+          - zip_code_value
+          - geographic_zip
+        description: The ZIP code of the customer's mailing address.
+        expr: ZIP_CODE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - '78701'
+          - '98101'
+          - '80202'
+    time_dimensions:
+      - name: ACQUISITION_DATE
+        synonyms:
+          - acquisition_timestamp
+          - customer_acquisition_date
+          - date_acquired
+          - onboarding_date
+          - customer_start_date
+          - join_date
+          - enrollment_date
+          - registration_date
+        description: Date when the customer was acquired.
+        expr: ACQUISITION_DATE
+        data_type: DATE
+        sample_values:
+          - '2021-11-08'
+          - '2022-03-15'
+          - '2023-01-20'
+      - name: DATE_OF_BIRTH
+        synonyms:
+          - birth_date
+          - dob
+          - date_of_birth
+          - birthdate
+          - birthday
+          - date_of_birth_recorded
+        description: Date of birth of the customer.
+        expr: DATE_OF_BIRTH
+        data_type: DATE
+        sample_values:
+          - '1978-03-10'
+          - '1985-07-22'
+          - '1995-12-05'
+      - name: LAST_POLICY_INTERACTION_DATE
+        synonyms:
+          - last_policy_touch_date
+          - most_recent_policy_interaction
+          - policy_last_updated
+          - last_policy_activity_date
+          - latest_policy_engagement_date
+          - policy_interaction_timestamp
+        description: Date of the customer's most recent interaction with a policy, such as a purchase, renewal, or cancellation.
+        expr: LAST_POLICY_INTERACTION_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-08-15'
+          - '2024-09-01'
+          - '2024-07-20'
+    facts:
+      - name: CHURN_RISK_SCORE
+        synonyms:
+          - customer_retention_risk
+          - attrition_likelihood
+          - customer_loss_probability
+          - risk_of_churn
+          - customer_turnover_score
+          - likelihood_of_churn
+        description: A numerical score indicating the likelihood of a customer churning or canceling their service, with higher values representing a greater risk of churn.
+        expr: CHURN_RISK_SCORE
+        data_type: NUMBER(3,2)
+        access_modifier: public_access
+        sample_values:
+          - '0.22'
+          - '0.12'
+          - '0.08'
+      - name: CREDIT_SCORE
+        synonyms:
+          - credit_rating
+          - credit_rank
+          - financial_score
+          - creditworthiness
+          - credit_grade
+          - financial_health_score
+        description: A three-digit number representing a customer's creditworthiness, with higher scores indicating a better credit history and a lower risk of defaulting on payments.
+        expr: CREDIT_SCORE
+        data_type: NUMBER(3,0)
+        access_modifier: public_access
+        sample_values:
+          - '780'
+          - '820'
+          - '720'
+      - name: DIGITAL_ENGAGEMENT_SCORE
+        synonyms:
+          - online_engagement_score
+          - digital_interaction_score
+          - customer_digital_activity
+          - online_participation_score
+          - digital_involvement_index
+          - e_engagement_score
+        description: A measure of a customer's level of engagement with a company's digital channels, such as website, mobile app, and social media, on a scale from 0 to 1, where 1 represents the highest level of engagement.
+        expr: DIGITAL_ENGAGEMENT_SCORE
+        data_type: NUMBER(3,2)
+        access_modifier: public_access
+        sample_values:
+          - '0.85'
+          - '0.92'
+          - '0.55'
+      - name: HOUSEHOLD_INCOME
+        synonyms:
+          - annual_household_income
+          - household_earnings
+          - total_household_earnings
+          - household_revenue
+          - family_income
+          - yearly_household_income
+          - household_wage
+        description: The annual income of the customer's household.
+        expr: HOUSEHOLD_INCOME
+        data_type: NUMBER(10,2)
+        access_modifier: public_access
+        sample_values:
+          - '68000.00'
+          - '52000.00'
+          - '95000.00'
+      - name: LIFETIME_VALUE
+        synonyms:
+          - customer_lifetime_value
+          - total_customer_value
+          - lifetime_revenue
+          - customer_worth
+          - total_spent
+          - lifetime_purchase_value
+          - customer_value_score
+        description: The total amount spent by a customer over their lifetime, representing the customer's overall value to the business.
+        expr: LIFETIME_VALUE
+        data_type: NUMBER(10,2)
+        access_modifier: public_access
+        sample_values:
+          - '8500.00'
+          - '18500.00'
+          - '24500.00'
+      - name: TOTAL_POLICIES_OWNED
+        synonyms:
+          - total_policies_held
+          - policies_owned
+          - number_of_policies
+          - policy_count
+          - total_insurance_policies
+        description: The total number of insurance policies owned by a customer.
+        expr: TOTAL_POLICIES_OWNED
+        data_type: NUMBER(2,0)
+        access_modifier: public_access
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+    primary_key:
+      columns:
+        - CUSTOMER_ID
+  - name: CUSTOMER_POLICIES
+    synonyms:
+      - customer_policies
+      - insurance_policies
+      - policy_details
+      - customer_insurance
+      - policy_info
+      - insurance_coverage
+      - customer_policy_info
+      - policy_data
+    description: This table stores information about insurance policies held by customers, including policy details, coverage, payment information, and acquisition channels. It tracks the status of each policy, including start and end dates, premium and coverage amounts, and payment frequency. The table also captures claims history and renewal information, as well as the channel and campaign through which the policy was acquired.
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: CUSTOMER_POLICIES
+    dimensions:
+      - name: ACQUISITION_CAMPAIGN_ID
+        synonyms:
+          - campaign_id
+          - marketing_campaign_id
+          - promo_campaign_id
+          - acquisition_program_id
+          - lead_source_id
+        description: Unique identifier for the marketing campaign that acquired the customer.
+        expr: ACQUISITION_CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CAMP_001
+          - CAMP_002
+      - name: ACQUISITION_CHANNEL
+        synonyms:
+          - acquisition_source
+          - marketing_channel
+          - sales_channel
+          - lead_source
+          - customer_origin
+          - channel_of_acquisition
+          - source_of_acquisition
+          - acquisition_medium
+        description: The channel through which the customer was acquired, indicating the primary source that led to the customer purchasing a policy, such as social media, an insurance agent, or digital marketing.
+        expr: ACQUISITION_CHANNEL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - social
+          - agent
+          - digital
+      - name: AUTO_RENEWAL_FLAG
+        synonyms:
+          - auto_renew
+          - automatic_renewal
+          - renewal_status
+          - auto_renewal_status
+          - auto_renewal_indicator
+          - automatic_renewal_indicator
+          - renew_automatically
+          - auto_renewal_enabled
+        description: Indicates whether the customer's policy is set to automatically renew at the end of the policy term.
+        expr: AUTO_RENEWAL_FLAG
+        data_type: BOOLEAN
+        sample_values:
+          - 'FALSE'
+          - 'TRUE'
+      - name: CUSTOMER_ID
+        synonyms:
+          - client_id
+          - customer_number
+          - account_id
+          - client_number
+          - policy_holder_id
+          - account_holder_id
+          - customer_account_id
+        description: Unique identifier for the customer to whom the policy belongs.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST_001
+          - CUST_004
+          - CUST_003
+      - name: PAYMENT_FREQUENCY
+        synonyms:
+          - payment_cycle
+          - billing_frequency
+          - premium_payment_schedule
+          - payment_schedule
+          - payment_interval
+          - billing_cycle
+          - payment_terms
+        description: The frequency at which a customer is required to make payments for their policy.
+        expr: PAYMENT_FREQUENCY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - annually
+          - monthly
+          - quarterly
+      - name: POLICY_ID
+        synonyms:
+          - policy_number
+          - policy_code
+          - insurance_id
+          - contract_id
+          - agreement_number
+          - policy_reference
+        description: Unique identifier for a specific insurance policy.
+        expr: POLICY_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - POL_010
+          - POL_002
+          - POL_003
+      - name: POLICY_STATUS
+        synonyms:
+          - policy_state
+          - coverage_status
+          - insurance_status
+          - policy_condition
+          - coverage_condition
+          - insurance_condition
+          - policy_position
+          - coverage_position
+        description: The current status of a customer's policy, indicating whether it is currently active or has lapsed due to non-payment or other reasons.
+        expr: POLICY_STATUS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - lapsed
+          - active
+      - name: PRODUCT_ID
+        synonyms:
+          - product_code
+          - insurance_product_id
+          - policy_product_id
+          - product_identifier
+          - insurance_product_code
+          - item_id
+          - product_number
+        description: Type of insurance product purchased by the customer.
+        expr: PRODUCT_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - HOME_BASIC
+          - AUTO_BASIC
+          - AUTO_FULL
+    time_dimensions:
+      - name: END_DATE
+        synonyms:
+          - expiration_date
+          - termination_date
+          - policy_end
+          - end_of_coverage
+          - contract_end_date
+          - policy_expiration
+        description: Date when the customer's policy is set to expire.
+        expr: END_DATE
+        data_type: DATE
+        sample_values:
+          - '2025-05-12'
+          - '2024-01-20'
+          - '2025-03-15'
+      - name: LAST_PAYMENT_DATE
+        synonyms:
+          - last_transaction_date
+          - most_recent_payment
+          - previous_payment_date
+          - final_payment_timestamp
+          - latest_payment_made
+        description: The date of the customer's most recent payment.
+        expr: LAST_PAYMENT_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-08-20'
+          - '2024-08-15'
+          - '2024-05-15'
+      - name: NEXT_RENEWAL_DATE
+        synonyms:
+          - renewal_due_date
+          - next_billing_date
+          - policy_renewal_date
+          - upcoming_renewal_date
+          - renewal_schedule_date
+          - next_payment_due_date
+        description: The date when the customer's policy is next due for renewal.
+        expr: NEXT_RENEWAL_DATE
+        data_type: DATE
+        sample_values:
+          - '2025-01-20'
+          - '2025-05-12'
+          - '2025-03-15'
+      - name: START_DATE
+        synonyms:
+          - effective_date
+          - policy_start
+          - coverage_start
+          - inception_date
+          - commencement_date
+          - activation_date
+        description: Date when the customer's policy became effective.
+        expr: START_DATE
+        data_type: DATE
+        sample_values:
+          - '2022-03-15'
+          - '2019-08-30'
+          - '2023-01-20'
+    facts:
+      - name: CLAIMS_COUNT
+        synonyms:
+          - claims_made
+          - number_of_claims
+          - claims_submitted
+          - total_claims
+          - claim_frequency
+        description: The number of claims made by a customer.
+        expr: CLAIMS_COUNT
+        data_type: NUMBER(3,0)
+        access_modifier: public_access
+        sample_values:
+          - '1'
+          - '2'
+          - '0'
+      - name: COVERAGE_AMOUNT
+        synonyms:
+          - covered_amount
+          - insured_amount
+          - policy_coverage
+          - coverage_value
+          - insured_sum
+          - policy_limit
+          - coverage_limit
+        description: The amount of coverage provided by the policy, representing the maximum amount that the insurance company will pay in the event of a claim.
+        expr: COVERAGE_AMOUNT
+        data_type: NUMBER(12,2)
+        access_modifier: public_access
+        sample_values:
+          - '25000.00'
+          - '50000.00'
+          - '20000.00'
+      - name: DEDUCTIBLE
+        synonyms:
+          - excess
+          - copayment
+          - out_of_pocket
+          - upfront_cost
+          - initial_payment
+          - minimum_payment
+          - threshold_amount
+        description: The amount that a customer must pay out-of-pocket for a claim before the insurance coverage kicks in.
+        expr: DEDUCTIBLE
+        data_type: NUMBER(6,2)
+        access_modifier: public_access
+        sample_values:
+          - '1000.00'
+          - '2500.00'
+          - '500.00'
+      - name: PREMIUM_AMOUNT
+        synonyms:
+          - premium_cost
+          - insurance_premium
+          - policy_premium
+          - annual_premium
+          - premium_payment
+          - insurance_cost
+          - policy_cost
+        description: The amount of premium paid by the customer for their policy.
+        expr: PREMIUM_AMOUNT
+        data_type: NUMBER(8,2)
+        access_modifier: public_access
+        sample_values:
+          - '1500.00'
+          - '800.00'
+          - '750.00'
+    primary_key:
+      columns:
+        - POLICY_ID
+    unique_keys:
+      - columns:
+          - CUSTOMER_ID
+  - name: CUSTOMER_SEGMENT_MEMBERSHIP
+    synonyms:
+      - customer_segment_membership
+      - customer_segment
+      - segment_membership
+      - customer_group_membership
+      - customer_category
+      - segment_affiliation
+      - customer_classification
+    description: This table stores information about a customer's membership in a specific segment, including the start and end dates of membership, a confidence score indicating the accuracy of the membership assignment, and timestamps for when the membership was created.
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: CUSTOMER_SEGMENT_MEMBERSHIP
+    dimensions:
+      - name: CUSTOMER_ID
+        synonyms:
+          - client_id
+          - customer_key
+          - client_key
+          - account_id
+          - account_number
+          - user_id
+        description: Unique identifier for the customer.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST_001
+          - CUST_003
+          - CUST_002
+      - name: MEMBERSHIP_ID
+        synonyms:
+          - member_id
+          - subscription_id
+          - customer_segment_key
+          - membership_key
+          - segment_membership_id
+          - unique_member_identifier
+        description: Unique identifier for a customer's membership in a specific segment or loyalty program.
+        expr: MEMBERSHIP_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - MEM_002
+          - MEM_003
+          - MEM_001
+      - name: SEGMENT_ID
+        synonyms:
+          - customer_group_id
+          - category_id
+          - classification_id
+          - cohort_id
+          - demographic_id
+        description: This column categorizes customers into distinct segments based on their characteristics, behaviors, or demographics, allowing for targeted marketing and personalized experiences.
+        expr: SEGMENT_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - HIGH_VALUE_AUTO
+          - FAMILY_SEGMENT
+          - YOUNG_PROFESSIONALS
+    time_dimensions:
+      - name: ENTRY_DATE
+        synonyms:
+          - start_date
+          - join_date
+          - membership_start
+          - enrollment_date
+          - activation_date
+          - begin_date
+        description: Date when the customer joined the segment.
+        expr: ENTRY_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-01-01'
+          - '2022-03-15'
+          - '2023-01-20'
+      - name: EXIT_DATE
+        synonyms:
+          - end_date
+          - termination_date
+          - cancellation_date
+          - drop_date
+          - completion_date
+          - expiry_date
+        description: Date when the customer exited or ended their membership or subscription.
+        expr: EXIT_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-01-01'
+    facts:
+      - name: CONFIDENCE_SCORE
+        synonyms:
+          - probability_score
+          - accuracy_rating
+          - prediction_confidence
+          - reliability_measure
+          - trust_level
+          - certainty_level
+        description: A measure of the confidence level, on a scale of 0 to 1, that a customer belongs to a specific segment, with higher values indicating a stronger likelihood of membership.
+        expr: CONFIDENCE_SCORE
+        data_type: NUMBER(3,2)
+        access_modifier: public_access
+        sample_values:
+          - '0.92'
+          - '0.85'
+          - '0.88'
+    primary_key:
+      columns:
+        - MEMBERSHIP_ID
+  - name: CUSTOMER_TOUCHPOINTS
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: CUSTOMER_TOUCHPOINTS
+    dimensions:
+      - name: AD_CAMPAIGN_ID
+        synonyms:
+          - advertising_campaign_id
+          - ad_campaign_identifier
+          - marketing_campaign_id
+          - promotional_campaign_id
+          - advertisement_id
+        description: Unique identifier for an advertising campaign that a customer interacted with.
+        expr: AD_CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - AD_001
+          - AD_002
+      - name: CAMPAIGN_ID
+        synonyms:
+          - ad_campaign_id
+          - marketing_campaign_id
+          - promo_id
+          - campaign_code
+          - marketing_initiative_id
+        description: Unique identifier for the marketing campaign that the customer interacted with.
+        expr: CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CAMP_001
+          - CAMP_002
+          - CAMP_003
+      - name: CHANNEL
+        synonyms:
+          - medium
+          - platform
+          - medium_of_communication
+          - communication_channel
+          - marketing_channel
+          - sales_channel
+          - distribution_channel
+          - outreach_channel
+        description: The channel through which a customer interacted with the company, such as email, phone, or online advertising.
+        expr: CHANNEL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - email
+          - phone
+          - google_ads
+      - name: CONTENT_CONSUMED
+        synonyms:
+          - consumed_content
+          - content_viewed
+          - media_consumed
+          - content_interacted_with
+          - viewed_content
+          - content_engagement
+          - consumed_media
+        description: The type of interaction or touchpoint a customer had with the company, such as receiving a follow-up email, engaging in a sales call, or using a quote tool.
+        expr: CONTENT_CONSUMED
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - follow_up_email
+          - sales_call
+          - quote_tool
+      - name: CUSTOMER_ID
+        synonyms:
+          - client_id
+          - customer_key
+          - account_id
+          - user_id
+          - patron_id
+          - client_key
+          - account_number
+          - customer_number
+        description: Unique identifier for the customer who interacted with the company through various touchpoints.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST_007
+          - CUST_003
+          - CUST_001
+      - name: SESSION_ID
+        synonyms:
+          - session_key
+          - visit_id
+          - interaction_id
+          - user_session
+          - browsing_session
+          - visit_identifier
+        description: Unique identifier for a customer's interaction session.
+        expr: SESSION_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - SESS_P_000027
+          - SESS_P_000087
+          - SESS_P_000049
+      - name: TOUCHPOINT_ID
+        synonyms:
+          - interaction_id
+          - event_id
+          - customer_interaction_id
+          - touchpoint_identifier
+          - engagement_id
+          - customer_touch_id
+        description: Unique identifier for a customer interaction or engagement point, such as a phone call, email, or in-person meeting.
+        expr: TOUCHPOINT_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - TOUCH_001
+          - TOUCH_P_000154
+          - TOUCH_P_000071
+      - name: TOUCHPOINT_TYPE
+        synonyms:
+          - interaction_type
+          - engagement_type
+          - customer_interaction_category
+          - touchpoint_category
+          - communication_channel
+          - interaction_method
+        description: The type of interaction a customer had with the company, such as making a purchase, becoming aware of the company or its products, or considering a purchase.
+        expr: TOUCHPOINT_TYPE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - purchase
+          - awareness
+          - consideration
+    time_dimensions:
+      - name: CREATED_AT
+        synonyms:
+          - created_date
+          - creation_time
+          - timestamp
+          - date_created
+          - record_created
+          - entry_date
+          - insertion_time
+          - added_at
+          - registered_at
+        description: Date and time when the customer touchpoint was created.
+        expr: CREATED_AT
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2025-09-16T01:37:36.945+0000
+          - 2025-09-16T01:37:46.912+0000
+          - 2025-09-16T01:39:06.045+0000
+      - name: TOUCHPOINT_TIMESTAMP
+        synonyms:
+          - touchpoint_date
+          - interaction_timestamp
+          - event_time
+          - customer_interaction_time
+          - engagement_timestamp
+          - timestamp_of_touchpoint
+          - touchpoint_occurrence_time
+          - interaction_date_and_time
+        description: The date and time when a customer interacted with the company, marking a specific point of contact or engagement.
+        expr: TOUCHPOINT_TIMESTAMP
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2024-08-16T09:30:00.000+0000
+          - 2025-08-08T05:00:00.000+0000
+          - 2025-09-02T17:00:00.000+0000
+    facts:
+      - name: ENGAGEMENT_SCORE
+        synonyms:
+          - engagement_level
+          - interaction_score
+          - customer_engagement
+          - engagement_rating
+          - interaction_rating
+          - engagement_value
+          - engagement_metric
+          - customer_interaction_score
+        description: A measure of the level of interaction and responsiveness between the customer and the company, with higher scores indicating a stronger engagement.
+        expr: ENGAGEMENT_SCORE
+        data_type: NUMBER(3,2)
+        access_modifier: public_access
+        sample_values:
+          - '0.85'
+          - '0.55'
+          - '0.95'
+      - name: INTERACTION_VALUE
+        synonyms:
+          - engagement_value
+          - interaction_score
+          - touchpoint_value
+          - customer_response
+          - interaction_level
+          - engagement_level
+          - interaction_rating
+        description: The INTERACTION_VALUE column represents the level of engagement or interaction a customer has with the company, with higher values indicating a stronger or more meaningful connection.
+        expr: INTERACTION_VALUE
+        data_type: NUMBER(4,3)
+        access_modifier: public_access
+        sample_values:
+          - '0.400'
+          - '0.534'
+          - '0.567'
+      - name: POSITION_IN_JOURNEY
+        synonyms:
+          - journey_stage
+          - journey_step
+          - customer_journey_position
+          - touchpoint_sequence
+          - interaction_order
+          - progression_in_journey
+          - journey_progress
+          - step_in_customer_journey
+        description: The position of the touchpoint in the customer's overall journey, with 1 indicating the first interaction, 2 indicating the second interaction, and 3 indicating the third interaction.
+        expr: POSITION_IN_JOURNEY
+        data_type: NUMBER(3,0)
+        access_modifier: public_access
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+    primary_key:
+      columns:
+        - TOUCHPOINT_ID
+  - name: DAILY_AD_PERFORMANCE
+    synonyms:
+      - daily_ad_performance
+      - ad_performance
+      - daily_ad_stats
+      - ad_insights
+      - daily_ad_metrics
+      - ad_campaign_performance
+      - ad_daily_report
+    description: This table stores daily performance metrics for online advertisements, including impressions, clicks, conversions, spend, and engagement rates, as well as video views and completion rates, allowing for analysis and optimization of ad campaigns.
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: DAILY_AD_PERFORMANCE
+    dimensions:
+      - name: AD_CAMPAIGN_ID
+        synonyms:
+          - ad_campaign_key
+          - campaign_id
+          - marketing_campaign_id
+          - ad_group_id
+          - promotion_id
+          - advertising_campaign_id
+        description: Unique identifier for an advertising campaign.
+        expr: AD_CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - AD_003
+          - AD_001
+      - name: PERFORMANCE_ID
+        synonyms:
+          - id
+          - performance_key
+          - ad_performance_id
+          - campaign_performance_id
+          - performance_identifier
+          - metric_id
+        description: Unique identifier for a specific advertising performance metric.
+        expr: PERFORMANCE_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - PERF_53
+          - PERF_57
+          - PERF_2
+    facts:
+      - name: CLICK_THROUGH_RATE
+        synonyms:
+          - click_rate
+          - ctr
+          - click_to_impression_ratio
+          - ad_click_percentage
+          - click_conversion_rate
+        description: The percentage of users who clicked on an ad after seeing it, calculated by dividing the number of clicks by the number of impressions.
+        expr: CLICK_THROUGH_RATE
+        data_type: NUMBER(5,4)
+        access_modifier: public_access
+        sample_values:
+          - '0.0410'
+          - '0.0778'
+          - '0.0931'
+      - name: CLICKS
+        synonyms:
+          - ad_clicks
+          - link_clicks
+          - button_clicks
+          - click_count
+          - click_volume
+          - ad_interactions
+          - user_clicks
+          - click_throughs
+        description: The total number of times an ad was clicked by users.
+        expr: CLICKS
+        data_type: NUMBER(8,0)
+        access_modifier: public_access
+        sample_values:
+          - '167'
+          - '305'
+          - '599'
+      - name: CONVERSION_RATE
+        synonyms:
+          - success_rate
+          - conversion_percentage
+          - conversion_efficiency
+          - conversion_ratio
+          - conversion_proportion
+        description: The percentage of users who completed a desired action (such as making a purchase, filling out a form, etc.) after clicking on an ad.
+        expr: CONVERSION_RATE
+        data_type: NUMBER(5,4)
+        access_modifier: public_access
+        sample_values:
+          - '0.0433'
+          - '0.0317'
+          - '0.0279'
+      - name: CONVERSIONS
+        synonyms:
+          - leads
+          - sales
+          - transactions
+          - goals
+          - completions
+          - successes
+          - achievements
+        description: The total number of conversions generated from an ad, such as purchases, sign-ups, or other desired actions, on a daily basis.
+        expr: CONVERSIONS
+        data_type: NUMBER(6,0)
+        access_modifier: public_access
+        sample_values:
+          - '20'
+          - '12'
+          - '10'
+      - name: COST_PER_CLICK
+        synonyms:
+          - cost_per_click
+          - cpc
+          - click_cost
+          - pay_per_click
+          - click_price
+          - cost_per_click_rate
+        description: The average cost incurred by the advertiser for each click on their ad.
+        expr: COST_PER_CLICK
+        data_type: NUMBER(6,2)
+        access_modifier: public_access
+        sample_values:
+          - '2.60'
+          - '1.96'
+          - '2.67'
+      - name: COST_PER_CONVERSION
+        synonyms:
+          - cost_per_acquisition
+          - conversion_cost
+          - cost_per_lead
+          - acquisition_cost
+          - conversion_expense
+        description: The average cost incurred to achieve one conversion, such as a sale, sign-up, or download, through an advertisement.
+        expr: COST_PER_CONVERSION
+        data_type: NUMBER(8,2)
+        access_modifier: public_access
+        sample_values:
+          - '40.60'
+          - '52.80'
+          - '73.00'
+      - name: ENGAGEMENT_RATE
+        synonyms:
+          - interaction_rate
+          - audience_participation_rate
+          - user_engagement_percentage
+          - engagement_percentage
+          - audience_involvement_rate
+        description: The percentage of users who interacted with an ad (e.g., likes, comments, shares, clicks) out of the total number of users who viewed the ad.
+        expr: ENGAGEMENT_RATE
+        data_type: NUMBER(5,4)
+        access_modifier: public_access
+        sample_values:
+          - '0.0000'
+      - name: IMPRESSIONS
+        synonyms:
+          - ad_views
+          - views
+          - ad_exposures
+          - display_count
+          - ad_reach
+          - exposures
+          - ad_display_count
+          - views_count
+        description: The total number of times an ad was displayed to users.
+        expr: IMPRESSIONS
+        data_type: NUMBER(10,0)
+        access_modifier: public_access
+        sample_values:
+          - '4614'
+          - '5890'
+          - '4278'
+      - name: QUALITY_SCORE
+        synonyms:
+          - ad_quality
+          - ad_relevance
+          - ad_rank
+          - ad_rating
+          - ad_grade
+          - ad_performance_score
+        description: A measure of an ad's relevance, landing page quality, and keyword relevance, with higher scores indicating better ad performance and lower costs.
+        expr: QUALITY_SCORE
+        data_type: NUMBER(3,1)
+        access_modifier: public_access
+        sample_values:
+          - '6.9'
+          - '7.9'
+          - '8.6'
+      - name: REACH
+        synonyms:
+          - audience
+          - impressions
+          - views
+          - visibility
+          - coverage
+          - exposure
+        description: The total number of people who viewed the ad at least once.
+        expr: REACH
+        data_type: NUMBER(10,0)
+        access_modifier: public_access
+        sample_values:
+          - '3017'
+          - '8852'
+          - '8822'
+      - name: SPEND
+        synonyms:
+          - cost
+          - expense
+          - expenditure
+          - disbursement
+          - outlay
+          - investment
+          - budget
+          - allocation
+        description: The total amount spent on advertisements for a specific day.
+        expr: SPEND
+        data_type: NUMBER(8,2)
+        access_modifier: public_access
+        sample_values:
+          - '921.00'
+          - '1566.00'
+          - '1515.00'
+    primary_key:
+      columns:
+        - PERFORMANCE_ID
+  - name: EMAIL_CAMPAIGNS
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: EMAIL_CAMPAIGNS
+    dimensions:
+      - name: CAMPAIGN_ID
+        synonyms:
+          - ad_campaign_id
+          - marketing_campaign_id
+          - promo_id
+          - campaign_identifier
+          - marketing_promotion_id
+          - ad_promotion_id
+        description: Unique identifier for an email marketing campaign.
+        expr: CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CAMP_001
+          - CAMP_005
+          - CAMP_003
+      - name: EMAIL_CAMPAIGN_ID
+        synonyms:
+          - campaign_email_id
+          - email_campaign_key
+          - email_promotion_id
+          - marketing_campaign_email_id
+          - email_marketing_id
+        description: Unique identifier for an email campaign.
+        expr: EMAIL_CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - EMAIL_003
+          - EMAIL_002
+          - EMAIL_001
+      - name: EMAIL_SUBJECT
+        synonyms:
+          - email_title
+          - subject_line
+          - message_subject
+          - email_header
+          - campaign_title
+          - subject_heading
+        description: The subject line of the email campaign sent to customers.
+        expr: EMAIL_SUBJECT
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - 'Bundle and Save: Add Home Insurance'
+          - We Miss You - Special Offer Inside
+          - Get Your Auto Quote in Under 5 Minutes
+      - name: EMAIL_TYPE
+        synonyms:
+          - email_category
+          - message_type
+          - email_format
+          - communication_channel
+          - mail_kind
+          - email_classification
+        description: The type of email campaign, either retention (focused on maintaining existing customer relationships) or promotional (focused on driving sales or promoting specific products/offers).
+        expr: EMAIL_TYPE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - retention
+          - promotional
+    time_dimensions:
+      - name: CREATED_AT
+        synonyms:
+          - created_date
+          - creation_timestamp
+          - timestamp
+          - creation_date
+          - date_created
+          - record_created_at
+          - inserted_at
+          - entry_date
+          - registration_date
+        description: The date and time when the email campaign was created.
+        expr: CREATED_AT
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2025-09-11T19:07:02.624+0000
+      - name: SEND_DATE
+        synonyms:
+          - dispatch_date
+          - email_sent_date
+          - campaign_launch_date
+          - send_timestamp
+          - email_dispatch_timestamp
+          - mailout_date
+          - campaign_send_date
+          - email_send_timestamp
+        description: Date on which the email campaign was sent.
+        expr: SEND_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-08-10'
+          - '2024-08-20'
+          - '2024-08-15'
+    facts:
+      - name: CLICK_RATE
+        synonyms:
+          - click_through_rate
+          - click_to_open_rate
+          - click_percentage
+          - click_ratio
+          - click_conversion_rate
+        description: The percentage of email recipients who clicked on a link within the email campaign.
+        expr: CLICK_RATE
+        data_type: NUMBER(5,4)
+        access_modifier: public_access
+        sample_values:
+          - '0.0800'
+      - name: CONVERSION_RATE
+        synonyms:
+          - success_rate
+          - conversion_percentage
+          - conversion_ratio
+          - success_percentage
+          - conversion_efficiency
+        description: The percentage of recipients who completed a desired action after opening an email campaign, such as making a purchase or filling out a form.
+        expr: CONVERSION_RATE
+        data_type: NUMBER(5,4)
+        access_modifier: public_access
+        sample_values:
+          - '0.1760'
+          - '0.0780'
+          - '0.0820'
+      - name: OPEN_RATE
+        synonyms:
+          - open_percentage
+          - email_open_rate
+          - open_ratio
+          - email_open_percentage
+          - open_proportion
+        description: The percentage of email recipients who opened the email campaign.
+        expr: OPEN_RATE
+        data_type: NUMBER(5,4)
+        access_modifier: public_access
+        sample_values:
+          - '0.3000'
+          - '0.3600'
+      - name: SPAM_COMPLAINTS
+        synonyms:
+          - spam_reports
+          - junk_mail_complaints
+          - abuse_reports
+          - unwanted_emails
+          - complaint_emails
+        description: The total number of spam complaints received for each email campaign.
+        expr: SPAM_COMPLAINTS
+        data_type: NUMBER(3,0)
+        access_modifier: public_access
+        sample_values:
+          - '8'
+          - '2'
+          - '5'
+      - name: TOTAL_CLICKS
+        synonyms:
+          - total_clicks_count
+          - clicks_total
+          - click_count
+          - total_link_clicks
+          - clicks_received
+        description: The total number of clicks on links within an email campaign.
+        expr: TOTAL_CLICKS
+        data_type: NUMBER(6,0)
+        access_modifier: public_access
+        sample_values:
+          - '68'
+          - '576'
+          - '342'
+      - name: TOTAL_CONVERSIONS
+        synonyms:
+          - total_successes
+          - total_acquisitions
+          - total_goals_achieved
+          - total_responses
+          - total_actions_taken
+          - total_outcomes
+          - total_results
+          - total_transactions
+        description: The total number of conversions generated from an email campaign, where a conversion is defined as a desired action taken by a recipient, such as making a purchase, filling out a form, or subscribing to a service.
+        expr: TOTAL_CONVERSIONS
+        data_type: NUMBER(4,0)
+        access_modifier: public_access
+        sample_values:
+          - '45'
+          - '12'
+          - '28'
+      - name: TOTAL_DELIVERED
+        synonyms:
+          - total_emails_delivered
+          - delivered_emails
+          - successful_deliveries
+          - total_emails_reached
+          - emails_received
+        description: The total number of emails successfully delivered to recipients for each email campaign.
+        expr: TOTAL_DELIVERED
+        data_type: NUMBER(8,0)
+        access_modifier: public_access
+        sample_values:
+          - '24000'
+          - '14250'
+          - '2375'
+      - name: TOTAL_OPENS
+        synonyms:
+          - total_email_opens
+          - email_open_count
+          - open_events
+          - total_views
+          - email_views
+          - open_rate_numerator
+        description: The total number of times an email campaign was opened by recipients.
+        expr: TOTAL_OPENS
+        data_type: NUMBER(8,0)
+        access_modifier: public_access
+        sample_values:
+          - '855'
+          - '7200'
+          - '4275'
+      - name: TOTAL_SENT
+        synonyms:
+          - total_emails_sent
+          - total_dispatched
+          - total_mailed
+          - total_sent_emails
+          - emails_sent_count
+          - total_sent_out
+        description: The total number of emails sent for each email campaign.
+        expr: TOTAL_SENT
+        data_type: NUMBER(8,0)
+        access_modifier: public_access
+        sample_values:
+          - '25000'
+          - '2500'
+          - '15000'
+      - name: UNSUBSCRIBES
+        synonyms:
+          - unsubscribed_users
+          - opt_outs
+          - removed_subscribers
+          - cancelled_subscriptions
+          - unsubscribed_count
+        description: The total number of email recipients who have unsubscribed from a specific email campaign.
+        expr: UNSUBSCRIBES
+        data_type: NUMBER(4,0)
+        access_modifier: public_access
+        sample_values:
+          - '45'
+          - '125'
+          - '78'
+    primary_key:
+      columns:
+        - EMAIL_CAMPAIGN_ID
+  - name: LEADS
+    synonyms:
+      - prospects
+      - potential_customers
+      - sales_leads
+      - customer_leads
+      - marketing_leads
+      - new_business_opportunities
+      - potential_sales
+      - business_opportunities
+      - customer_prospects
+    description: This table stores information about leads generated from various marketing campaigns, including lead source, medium, and status, as well as customer and campaign details, and tracks the lead's progress through the sales funnel, including conversion and assignment to sales agents.
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: LEADS
+    dimensions:
+      - name: AD_CAMPAIGN_ID
+        synonyms:
+          - advertising_campaign_id
+          - ad_campaign_identifier
+          - marketing_campaign_id
+          - promotional_campaign_id
+          - online_ad_campaign_id
+        description: Unique identifier for the advertising campaign that generated the lead.
+        expr: AD_CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - AD_001
+          - AD_002
+      - name: ASSIGNED_AGENT_ID
+        synonyms:
+          - agent_id
+          - assigned_rep_id
+          - lead_owner_id
+          - responsible_agent
+          - assigned_user_id
+          - assigned_representative_id
+          - lead_agent_id
+        description: The unique identifier of the agent assigned to the lead.
+        expr: ASSIGNED_AGENT_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - AGT_003
+          - AGT_001
+          - AGT_002
+      - name: CAMPAIGN_ID
+        synonyms:
+          - ad_campaign_id
+          - marketing_campaign_id
+          - promo_id
+          - campaign_code
+          - marketing_initiative_id
+          - ad_id
+        description: Unique identifier for the marketing campaign that generated the lead.
+        expr: CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CAMP_001
+          - CAMP_002
+      - name: CUSTOMER_ID
+        synonyms:
+          - client_id
+          - account_id
+          - customer_account
+          - client_account
+          - account_number
+          - customer_number
+        description: Unique identifier for the customer.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST_008
+          - CUST_001
+          - CUST_007
+      - name: LEAD_ID
+        synonyms:
+          - lead_identifier
+          - lead_key
+          - lead_reference
+          - lead_unique_id
+          - prospect_id
+          - opportunity_id
+          - customer_lead_id
+        description: Unique identifier for a sales lead.
+        expr: LEAD_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - LEAD_001
+          - LEAD_003
+          - LEAD_002
+      - name: LEAD_SOURCE
+        synonyms:
+          - origin
+          - lead_origin
+          - source_channel
+          - lead_channel
+          - marketing_source
+          - lead_referrer
+          - referral_source
+          - lead_provenance
+        description: The source that generated the lead, such as a specific advertising platform or referral from another website.
+        expr: LEAD_SOURCE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - google_ads
+          - facebook
+          - referral
+      - name: LEAD_STATUS
+        synonyms:
+          - lead_stage
+          - lead_phase
+          - sales_status
+          - opportunity_status
+          - prospect_status
+          - customer_status
+          - conversion_status
+          - lead_progress
+        description: The current status of a lead in the sales process, indicating whether it is being nurtured, has been converted into an opportunity, or has been qualified as a potential customer.
+        expr: LEAD_STATUS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - nurturing
+          - converted
+          - qualified
+      - name: PRODUCT_INTEREST
+        synonyms:
+          - product_preference
+          - product_inclination
+          - product_affinity
+          - product_fascination
+          - product_curiosity
+          - product_enthusiasm
+          - product_attraction
+        description: The type of product(s) a lead has expressed interest in.
+        expr: PRODUCT_INTEREST
+        data_type: ARRAY
+        sample_values:
+          - |-
+            [
+              "home"
+            ]
+          - |-
+            [
+              "auto"
+            ]
+          - |-
+            [
+              "auto",
+              "home"
+            ]
+    time_dimensions:
+      - name: CONVERSION_DATE
+        synonyms:
+          - converted_on
+          - converted_at
+          - conversion_timestamp
+          - date_converted
+          - lead_conversion_date
+          - sale_date
+          - closed_date
+        description: Date when a lead converted into a customer or a sale.
+        expr: CONVERSION_DATE
+        data_type: DATE
+        sample_values:
+          - '2021-11-08'
+          - '2022-03-15'
+    facts:
+      - name: DAYS_TO_CONVERSION
+        synonyms:
+          - days_to_lead_conversion
+          - conversion_timeframe
+          - lead_conversion_period
+          - time_to_convert
+          - conversion_duration
+          - days_to_close
+          - sales_cycle_length
+        description: The number of days it took for a lead to convert into a customer or complete a desired action.
+        expr: DAYS_TO_CONVERSION
+        data_type: NUMBER(4,0)
+        access_modifier: public_access
+        sample_values:
+          - '5'
+          - '3'
+      - name: LEAD_SCORE
+        synonyms:
+          - lead_rating
+          - prospect_score
+          - sales_potential
+          - lead_grade
+          - conversion_likelihood
+          - prospect_rank
+          - sales_score
+          - opportunity_score
+        description: A numerical score assigned to a lead to measure its potential value or likelihood of conversion, with higher scores indicating more promising leads.
+        expr: LEAD_SCORE
+        data_type: NUMBER(3,0)
+        access_modifier: public_access
+        sample_values:
+          - '72'
+          - '90'
+          - '85'
+    primary_key:
+      columns:
+        - LEAD_ID
+  - name: MARKETING_CAMPAIGNS
+    synonyms:
+      - advertising_campaigns
+      - promotional_campaigns
+      - marketing_drives
+      - ad_campaigns
+      - promotional_drives
+      - marketing_efforts
+      - advertising_drives
+      - promotional_efforts
+    description: This table stores information about marketing campaigns, including their objectives, target audience, budget, planned performance metrics, and status. It serves as a central repository for campaign metadata, allowing for tracking and analysis of marketing efforts across various channels and products.
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: MARKETING_CAMPAIGNS
+    dimensions:
+      - name: CAMPAIGN_ID
+        synonyms:
+          - campaign_key
+          - marketing_id
+          - promo_id
+          - ad_id
+          - campaign_code
+          - marketing_campaign_key
+          - promo_code
+        description: Unique identifier for a marketing campaign.
+        expr: CAMPAIGN_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CAMP_001
+          - CAMP_003
+          - CAMP_002
+      - name: CAMPAIGN_NAME
+        synonyms:
+          - advertising_name
+          - marketing_campaign_title
+          - promotion_name
+          - campaign_title
+          - ad_name
+          - promo_name
+        description: The name of the marketing campaign, which represents a specific promotional effort or initiative undertaken by the organization to achieve a particular marketing objective.
+        expr: CAMPAIGN_NAME
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Life Insurance Upsell
+          - Digital Auto Acquisition Q3
+          - Social Media Awareness Campaign
+      - name: CAMPAIGN_OBJECTIVE
+        synonyms:
+          - advertising_goal
+          - marketing_aim
+          - campaign_target
+          - promotional_objective
+          - advertising_target
+          - marketing_focus
+          - campaign_purpose
+        description: The CAMPAIGN_OBJECTIVE column describes the primary goal or target outcome of each marketing campaign, such as increasing brand recognition, acquiring new customers, or cross-selling existing customers on additional products.
+        expr: CAMPAIGN_OBJECTIVE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Build brand awareness among young demographics
+          - Acquire new auto insurance customers through digital channels
+          - Sell home insurance to existing auto customers
+      - name: CAMPAIGN_STATUS
+        synonyms:
+          - campaign_state
+          - campaign_phase
+          - marketing_status
+          - promotion_status
+          - ad_status
+          - campaign_progress
+          - campaign_condition
+        description: The current status of a marketing campaign, indicating whether it has been completed or is still active.
+        expr: CAMPAIGN_STATUS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - completed
+          - active
+      - name: CAMPAIGN_TYPE
+        synonyms:
+          - advertising_type
+          - campaign_category
+          - marketing_channel
+          - promotion_method
+          - ad_format
+          - campaign_format
+          - marketing_strategy
+        description: The type of marketing campaign, indicating whether its purpose is to cross-sell (sell related products to existing customers), acquire new customers, or upsell (sell higher-value products to existing customers).
+        expr: CAMPAIGN_TYPE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - cross_sell
+          - acquisition
+          - upsell
+      - name: CHANNEL_MIX
+        synonyms:
+          - media_mix
+          - marketing_channels
+          - channel_allocation
+          - media_split
+          - channel_distribution
+          - promotional_channels
+          - advertising_mix
+        description: 'The CHANNEL_MIX column represents the marketing channel or combination of channels used to execute a marketing campaign, with possible values including: agent (in-person or human interaction), mixed (a combination of channels), and digital (online or electronic channels).'
+        expr: CHANNEL_MIX
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - agent
+          - mixed
+          - digital
+      - name: CREATED_BY
+        synonyms:
+          - author
+          - creator
+          - owner
+          - updater
+          - modifier
+          - editor
+          - contributor
+          - originator
+        description: The person responsible for creating the marketing campaign.
+        expr: CREATED_BY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - marketing_manager
+      - name: TARGET_PRODUCT_IDS
+        synonyms:
+          - product_ids_to_target
+          - target_product_list
+          - product_target_ids
+          - ids_of_target_products
+          - target_product_identifiers
+        description: List of product IDs targeted by the marketing campaign.
+        expr: TARGET_PRODUCT_IDS
+        data_type: ARRAY
+        sample_values:
+          - |-
+            [
+              "AUTO_BASIC",
+              "AUTO_FULL"
+            ]
+          - |-
+            [
+              "AUTO_BASIC",
+              "HEALTH_BASIC"
+            ]
+          - |-
+            [
+              "HOME_BASIC",
+              "HOME_PREMIUM"
+            ]
+      - name: TARGET_SEGMENTS
+        synonyms:
+          - target_audiences
+          - target_groups
+          - target_markets
+          - target_demographics
+          - target_populations
+          - target_categories
+        description: The target audience segments for each marketing campaign.
+        expr: TARGET_SEGMENTS
+        data_type: ARRAY
+        sample_values:
+          - |-
+            [
+              "HIGH_VALUE_AUTO",
+              "FAMILY_SEGMENT"
+            ]
+          - |-
+            [
+              "YOUNG_PROFESSIONALS",
+              "FAMILY_SEGMENT"
+            ]
+          - |-
+            [
+              "YOUNG_PROFESSIONALS"
+            ]
+    time_dimensions:
+      - name: CREATED_AT
+        synonyms:
+          - created_date
+          - creation_timestamp
+          - timestamp_created
+          - date_created
+          - creation_date
+          - record_created_at
+          - entry_timestamp
+          - insertion_time
+        description: Date and time when the marketing campaign was created.
+        expr: CREATED_AT
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2025-09-11T19:06:55.698+0000
+      - name: END_DATE
+        synonyms:
+          - expiration_date
+          - end_time
+          - completion_date
+          - finish_date
+          - termination_date
+          - closing_date
+        description: The date when each marketing campaign is scheduled to end.
+        expr: END_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-08-31'
+          - '2024-11-15'
+          - '2024-09-30'
+      - name: START_DATE
+        synonyms:
+          - launch_date
+          - start_time
+          - campaign_launch
+          - beginning_date
+          - initiation_date
+          - kickoff_date
+          - commencement_date
+        description: The date when each marketing campaign was initiated.
+        expr: START_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-05-15'
+          - '2024-07-01'
+          - '2024-06-01'
+    facts:
+      - name: PLANNED_CLICKS
+        synonyms:
+          - projected_clicks
+          - forecasted_clicks
+          - expected_clicks
+          - anticipated_clicks
+          - planned_click_throughs
+          - estimated_clicks
+        description: The total number of clicks that were planned or targeted for a specific marketing campaign.
+        expr: PLANNED_CLICKS
+        data_type: NUMBER(10,0)
+        access_modifier: public_access
+        sample_values:
+          - '250000'
+          - '125000'
+          - '40000'
+      - name: PLANNED_CONVERSIONS
+        synonyms:
+          - projected_conversions
+          - forecasted_conversions
+          - expected_conversions
+          - anticipated_conversions
+          - planned_successes
+          - estimated_goals
+        description: The total number of conversions (e.g. sales, leads, sign-ups) that a marketing campaign is expected to achieve.
+        expr: PLANNED_CONVERSIONS
+        data_type: NUMBER(8,0)
+        access_modifier: public_access
+        sample_values:
+          - '1200'
+          - '2500'
+          - '1800'
+      - name: PLANNED_IMPRESSIONS
+        synonyms:
+          - projected_views
+          - forecasted_ad_views
+          - planned_ad_exposures
+          - expected_ad_impressions
+          - anticipated_views
+          - predicted_ad_reach
+        description: The total number of ad impressions planned for a marketing campaign.
+        expr: PLANNED_IMPRESSIONS
+        data_type: NUMBER(12,0)
+        access_modifier: public_access
+        sample_values:
+          - '2500000'
+          - '5000000'
+          - '800000'
+      - name: PLANNED_REVENUE
+        synonyms:
+          - projected_revenue
+          - forecasted_revenue
+          - expected_revenue
+          - anticipated_revenue
+          - planned_sales
+          - estimated_revenue
+          - predicted_revenue
+          - forecasted_sales
+        description: The planned revenue is the projected income that a marketing campaign is expected to generate.
+        expr: PLANNED_REVENUE
+        data_type: NUMBER(12,2)
+        access_modifier: public_access
+        sample_values:
+          - '3750000.00'
+          - '4500000.00'
+          - '1800000.00'
+      - name: TOTAL_BUDGET
+        synonyms:
+          - total_funds
+          - overall_budget
+          - allocated_amount
+          - total_expenditure
+          - budget_allotment
+          - total_cost
+          - financial_allocation
+        description: The total budget allocated for each marketing campaign.
+        expr: TOTAL_BUDGET
+        data_type: NUMBER(10,2)
+        access_modifier: public_access
+        sample_values:
+          - '150000.00'
+          - '100000.00'
+          - '75000.00'
+    primary_key:
+      columns:
+        - CAMPAIGN_ID
+  - name: WEBSITE_SESSIONS
+    synonyms:
+      - website_visits
+      - user_sessions
+      - browsing_sessions
+      - site_visits
+      - visitor_sessions
+      - online_sessions
+      - web_sessions
+      - session_data
+      - user_activity
+      - browsing_history
+    description: This table stores information about website sessions, including session details, customer and visitor information, page views, time on site, traffic sources, device and browser details, location, and conversion metrics, allowing for analysis of customer behavior and marketing effectiveness.
+    base_table:
+      database: INS_CO
+      schema: MARKETING_ANALYTICS
+      table: WEBSITE_SESSIONS
+    dimensions:
+      - name: CAMPAIGN
+        synonyms:
+          - advertising_campaign
+          - marketing_campaign
+          - promo
+          - promotion
+          - advertising_strategy
+          - marketing_initiative
+          - ad_campaign
+          - promotional_activity
+        description: The type of marketing campaign that drove the website session.
+        expr: CAMPAIGN
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - auto_insurance_campaign
+          - cross_sell_home
+          - awareness_campaign
+      - name: CONVERSION_FLAG
+        synonyms:
+          - goal_achieved
+          - conversion_status
+          - success_indicator
+          - target_met
+          - outcome_flag
+        description: Indicates whether a website session resulted in a conversion (e.g. a purchase, sign-up, or other desired action) or not.
+        expr: CONVERSION_FLAG
+        data_type: BOOLEAN
+        sample_values:
+          - 'FALSE'
+          - 'TRUE'
+      - name: CUSTOMER_ID
+        synonyms:
+          - client_id
+          - customer_key
+          - account_id
+          - user_id
+          - client_key
+          - account_number
+          - customer_number
+          - user_key
+        description: Unique identifier for the customer who initiated the website session.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST_001
+          - CUST_003
+          - CUST_007
+      - name: LOCATION_CITY
+        synonyms:
+          - city
+          - municipality
+          - urban_area
+          - metropolitan_area
+          - town
+          - urban_center
+          - city_name
+        description: The city where the website session originated from, indicating the geographical location of the user.
+        expr: LOCATION_CITY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Austin
+          - Denver
+          - Portland
+      - name: LOCATION_COUNTRY
+        synonyms:
+          - country
+          - nation
+          - nationality
+          - geographical_location
+          - country_of_origin
+          - territory
+          - region
+          - homeland
+        description: The country where the website session originated from, based on the user's IP address.
+        expr: LOCATION_COUNTRY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - US
+      - name: LOCATION_STATE
+        synonyms:
+          - state
+          - province
+          - region
+          - territory
+          - administrative_area
+          - geographic_area
+          - area_code
+          - state_code
+          - province_code
+        description: The state where the website session originated from, represented by a two-letter postal code (e.g. TX for Texas, CO for Colorado, etc.).
+        expr: LOCATION_STATE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - TX
+          - CO
+          - OR
+      - name: SESSION_ID
+        synonyms:
+          - session_key
+          - visit_id
+          - interaction_id
+          - user_session
+          - browsing_session
+          - session_identifier
+        description: Unique identifier for a website session, used to track and analyze user interactions within a single visit to the website.
+        expr: SESSION_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - SESS_001
+          - SESS_002
+          - SESS_003
+      - name: TRAFFIC_SOURCE
+        synonyms:
+          - traffic_channel
+          - referral_source
+          - website_referrer
+          - source_medium
+          - origin_channel
+          - marketing_channel
+          - lead_source
+          - campaign_source
+        description: The source of traffic that drove the user to the website, such as email marketing campaigns, social media platforms like Facebook, or search engines like Google.
+        expr: TRAFFIC_SOURCE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - email
+          - facebook
+          - google
+      - name: VISITOR_ID
+        synonyms:
+          - user_id
+          - guest_id
+          - site_visitor_id
+          - visitor_identifier
+          - guest_identifier
+          - unique_visitor_id
+          - visitor_key
+        description: Unique identifier for a website visitor, used to track individual user interactions across multiple sessions.
+        expr: VISITOR_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - VIS_001
+          - VIS_003
+          - VIS_002
+    time_dimensions:
+      - name: SESSION_END
+        synonyms:
+          - session_close
+          - session_termination
+          - end_time
+          - session_completion
+          - termination_time
+          - end_session
+          - close_time
+        description: The date and time when a website session ended.
+        expr: SESSION_END
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2024-08-25T12:32:00.000+0000
+          - 2024-08-20T19:35:00.000+0000
+          - 2024-08-15T08:45:00.000+0000
+      - name: SESSION_START
+        synonyms:
+          - session_initiation
+          - start_time
+          - session_begin
+          - initial_access
+          - visit_start
+          - interaction_begin
+          - start_date
+          - session_commencement
+        description: The date and time when a user's website session started.
+        expr: SESSION_START
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2024-08-20T19:22:00.000+0000
+          - 2024-08-15T08:30:00.000+0000
+          - 2024-08-25T12:15:00.000+0000
+    primary_key:
+      columns:
+        - SESSION_ID
+relationships:
+  - name: AD_MARKETING
+    left_table: AD_CAMPAIGNS
+    right_table: MARKETING_CAMPAIGNS
+    relationship_columns:
+      - left_column: CAMPAIGN_ID
+        right_column: CAMPAIGN_ID
+  - name: CUSTOMER_ATTRIBUTION
+    left_table: ATTRIBUTION_RESULTS
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
+  - name: FORECAST_MARKETING
+    left_table: CAMPAIGN_FORECASTS
+    right_table: MARKETING_CAMPAIGNS
+    relationship_columns:
+      - left_column: CAMPAIGN_ID
+        right_column: CAMPAIGN_ID
+  - name: CUSTOMER_POLICIES
+    left_table: CUSTOMER_POLICIES
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
+  - name: CUSTOMER_SEGMENT_ASSIGNMENT
+    left_table: CUSTOMER_SEGMENT_MEMBERSHIP
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
+  - name: TOUCHPOINTS_MARKETING
+    left_table: CUSTOMER_TOUCHPOINTS
+    right_table: MARKETING_CAMPAIGNS
+    relationship_columns:
+      - left_column: CAMPAIGN_ID
+        right_column: CAMPAIGN_ID
+  - name: CAMPAIGN_PERFORMANCE
+    left_table: DAILY_AD_PERFORMANCE
+    right_table: AD_CAMPAIGNS
+    relationship_columns:
+      - left_column: AD_CAMPAIGN_ID
+        right_column: AD_CAMPAIGN_ID
+  - name: EMAIL_MARKETING
+    left_table: EMAIL_CAMPAIGNS
+    right_table: MARKETING_CAMPAIGNS
+    relationship_columns:
+      - left_column: CAMPAIGN_ID
+        right_column: CAMPAIGN_ID
+  - name: CUSTOMER_LEADS
+    left_table: LEADS
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
+  - name: LEADS_MARKETING_CAMPAIGN
+    left_table: LEADS
+    right_table: MARKETING_CAMPAIGNS
+    relationship_columns:
+      - left_column: CAMPAIGN_ID
+        right_column: CAMPAIGN_ID
+  - name: CUSTOMER_WEB_ACTIVITY
+    left_table: WEBSITE_SESSIONS
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
+verified_queries:
+  - name: How are marketing & ads programs tracking to plan in terms of number of conversions generated compared to planned conversions?
+    question: How are marketing & ads programs tracking to plan in terms of number of conversions generated compared to planned conversions?
+    sql: |-
+      WITH actual_conversions AS (
+        SELECT
+          mc.campaign_id,
+          SUM(e.total_conversions) AS actual_conversions
+        FROM
+          email_campaigns AS e
+          LEFT JOIN marketing_campaigns AS mc ON e.campaign_id = mc.campaign_id
+        GROUP BY
+          mc.campaign_id
+      ),
+      planned_conversions AS (
+        SELECT
+          mc.campaign_id,
+          mc.planned_conversions
+        FROM
+          marketing_campaigns AS mc
+      )
+      SELECT
+        ac.campaign_id,
+        ac.actual_conversions,
+        pc.planned_conversions
+      FROM
+        actual_conversions AS ac
+        LEFT JOIN planned_conversions AS pc ON ac.campaign_id = pc.campaign_id
+    use_as_onboarding_question: false
+    verified_by: Marie Duran
+    verified_at: 1758105564
+  - name: How many leads are there for each campaign and what is the status of each of those leads?
+    question: How many leads are there for each campaign and what is the status of each of those leads?
+    sql: |-
+      WITH __leads AS (
+        SELECT
+          campaign_id,
+          lead_id,
+          lead_status
+        FROM
+          ins_co.marketing_analytics.leads
+      )
+      SELECT
+        l.campaign_id,
+        l.lead_status,
+        COUNT(l.lead_id) AS actual_leads
+      FROM
+        __leads AS l
+      GROUP BY
+        l.campaign_id,
+        l.lead_status -- Generated by Cortex Analyst
+      ;
+    use_as_onboarding_question: false
+    verified_by: Marie Duran
+    verified_at: 1758106032
+  - name: Which marketing channels are most effective in terms of conversions?
+    question: Which marketing channels are most effective in terms of conversions?
+    sql: |-
+      WITH total_conversions_by_channel AS (
+        SELECT
+          ar.channel,
+          SUM(ar.attribution_credit * ar.attributed_revenue) AS total_conversions
+        FROM
+          attribution_results AS ar
+        GROUP BY
+          ar.channel
+      )
+      SELECT
+        channel,
+        total_conversions
+      FROM
+        total_conversions_by_channel
+      ORDER BY
+        total_conversions DESC NULLS LAST
+    use_as_onboarding_question: false
+    verified_by: Marie Duran
+    verified_at: 1758051601
+  - name: ' lead generation by state'
+    question: ' lead generation by state'
+    sql: |-
+      WITH __leads AS (
+        SELECT
+          customer_id,
+          lead_id
+        FROM ins_co.marketing_analytics.leads
+      ), __customers AS (
+        SELECT
+          customer_id,
+          state
+        FROM ins_co.marketing_analytics.customers
+      ), leads_by_state AS (
+        SELECT
+          c.state,
+          COUNT(DISTINCT l.lead_id) AS total_leads
+        FROM __leads AS l
+        LEFT OUTER JOIN __customers AS c
+          ON l.customer_id = c.customer_id
+        GROUP BY
+          c.state
+      )
+      SELECT
+        state,
+        total_leads
+      FROM leads_by_state
+      ORDER BY
+        total_leads ASC
+       -- Generated by Cortex Analyst
+      ;
+    use_as_onboarding_question: false
+    verified_by: Marie Duran
+    verified_at: 1758057941
+  - name: How is the actual advertising spend tracking against the total planned budget for campaign ID 'CAM_001'?
+    question: How is the actual advertising spend tracking against the total planned budget for campaign ID 'CAM_001'?
+    sql: |-
+      WITH actual_spend AS (
+        SELECT
+          ad.campaign_id,
+          SUM(dap.spend) AS actual_spend
+        FROM
+          daily_ad_performance AS dap
+          LEFT JOIN ad_campaigns AS ad ON dap.ad_campaign_id = ad.ad_campaign_id
+        WHERE
+          ad.campaign_id = 'CAMP_001'
+        GROUP BY
+          ad.campaign_id
+      ),
+      planned_budget AS (
+        SELECT
+          mc.campaign_id,
+          mc.total_budget
+        FROM
+          marketing_campaigns AS mc
+        WHERE
+          mc.campaign_id = 'CAMP_001'
+      )
+      SELECT
+        aspend.campaign_id,
+        aspend.actual_spend,
+        pbudget.total_budget
+      FROM
+        actual_spend AS aspend
+        LEFT JOIN planned_budget AS pbudget ON aspend.campaign_id = pbudget.campaign_id
+    use_as_onboarding_question: false
+    verified_by: Marie Duran
+    verified_at: 1758105737
